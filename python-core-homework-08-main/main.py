@@ -8,7 +8,6 @@ def get_birthdays_per_week(users):
     today = date.today()
     current_year = today.year
 
-    
     def current_week_range(today):
         week_start = today
         week_end = today + timedelta(days=6)
@@ -17,8 +16,6 @@ def get_birthdays_per_week(users):
         print("End of week:", week_end)
         return week_start, week_end
     
-    
-
     week_start, week_end = current_week_range(today)
 
     birthdays_by_weekday = defaultdict(list)
@@ -37,12 +34,14 @@ def get_birthdays_per_week(users):
 
         if week_start <= birthday_date <= week_end:
             weekday = birthday_date.strftime("%A")
+            if weekday in ('Saturday', 'Sunday'):
+                weekday = 'Monday'
             birthdays_by_weekday[weekday].append(user["name"])
 
     return dict(birthdays_by_weekday)
 
 if __name__ == "__main__":
-    today = datetime(2024, 1, 30)  
+    today = datetime(2024, 1, 30)
     users = [
         {"name": "John", "birthday": today + timedelta(days=5)},
         {"name": "Doe", "birthday": today + timedelta(days=6)},
